@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>덴트오더</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f5f5f5;
+}
+
+.header {
+  background: #6c2bd9;
+  color: white;
+  padding: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.container {
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background: #6c2bd9;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+덴트오더 (치과 ↔ 기공소)
+</div>
+
+<div class="container">
+
+<div class="card">
+<h3>🦷 새 오더 생성</h3>
+<input class="input" id="patient" placeholder="환자명">
+<input class="input" id="type" placeholder="보철 종류">
+<button class="button" onclick="createOrder()">오더 생성하기</button>
+</div>
+
+<div class="card">
+<h3>📦 진행중 오더</h3>
+<div id="orderList">현재 진행중인 작업이 없습니다</div>
+</div>
+
+</div>
+
+<script>
+function createOrder() {
+  const name = document.getElementById('patient').value;
+  const type = document.getElementById('type').value;
+
+  if (!name || !type) {
+    alert("정보를 입력하세요");
+    return;
+  }
+
+  const orderHTML = `
+    <div style="padding:10px;border-bottom:1px solid #eee;">
+      ${name} / ${type}
+    </div>
+  `;
+
+  const list = document.getElementById('orderList');
+
+  if (list.innerHTML.includes("없습니다")) {
+    list.innerHTML = "";
+  }
+
+  list.innerHTML += orderHTML;
+
+  document.getElementById('patient').value = "";
+  document.getElementById('type').value = "";
+}
+</script>
+
+</body>
+</html>
