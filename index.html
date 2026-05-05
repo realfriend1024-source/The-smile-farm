@@ -1,109 +1,199 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta charset="UTF-8">
-<title>덴트오더</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>미소팜 덴탈 오더</title>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  background: #f5f5f5;
+  font-family: Arial, "Noto Sans KR", sans-serif;
+  background: #f4f4f4;
+  color: #222;
 }
 
-.header {
-  background: #6c2bd9;
-  color: white;
-  padding: 20px;
-  font-size: 22px;
+.app {
+  max-width: 430px;
+  margin: 0 auto;
+  background: #fff;
+  min-height: 100vh;
+}
+
+.top {
+  padding: 14px 12px 6px;
+  font-size: 14px;
   font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
 }
 
-.container {
-  padding: 20px;
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  background: #e8f4cf;
 }
 
-.card {
-  background: white;
-  border-radius: 15px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-
-.button {
-  display: block;
-  width: 100%;
-  padding: 15px;
-  background: #6c2bd9;
+.logo {
+  width: 32px;
+  height: 32px;
+  background: #4d8b25;
   color: white;
-  border: none;
-  border-radius: 10px;
+  font-weight: bold;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-row input {
+  flex: 1;
+  height: 32px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 0 10px;
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #f5f5e8;
+  border-bottom: 1px solid #ccc;
+}
+
+.nav div {
+  text-align: center;
+  padding: 8px 2px;
+  font-size: 11px;
+  border-right: 1px solid #ddd;
+}
+
+.nav div span {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 3px;
+}
+
+.banner {
+  margin: 10px;
+  background: linear-gradient(90deg, #ffe89a, #fff);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+}
+
+.banner img {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.banner-text {
+  flex: 1;
+  padding: 10px;
+}
+
+.banner-text h3 {
+  margin: 0 0 6px;
   font-size: 16px;
+}
+
+.banner-text p {
+  margin: 0;
+  font-size: 11px;
+}
+
+.quick {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px;
+  font-size: 13px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px 10px;
+  padding: 20px 12px;
+}
+
+.category {
+  text-align: center;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.category .img {
+  width: 74px;
+  height: 54px;
+  margin: 0 auto 6px;
+  background: #eee;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.side-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 18px 15px;
+}
+
+.small-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 6px;
+  border: 1px solid #999;
+  background: #fff;
+  font-size: 12px;
   text-align: center;
 }
 
-.input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.order-main {
+  margin: 0 12px 14px;
+  background: #486f23;
+  color: white;
+  text-align: center;
+  padding: 18px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
 }
-</style>
-</head>
 
-<body>
-
-<div class="header">
-덴트오더 (치과 ↔ 기공소)
-</div>
-
-<div class="container">
-
-<div class="card">
-<h3>🦷 새 오더 생성</h3>
-<input class="input" id="patient" placeholder="환자명">
-<input class="input" id="type" placeholder="보철 종류">
-<button class="button" onclick="createOrder()">오더 생성하기</button>
-</div>
-
-<div class="card">
-<h3>📦 진행중 오더</h3>
-<div id="orderList">현재 진행중인 작업이 없습니다</div>
-</div>
-
-</div>
-
-<script>
-function createOrder() {
-  const name = document.getElementById('patient').value;
-  const type = document.getElementById('type').value;
-
-  if (!name || !type) {
-    alert("정보를 입력하세요");
-    return;
-  }
-
-  const orderHTML = `
-    <div style="padding:10px;border-bottom:1px solid #eee;">
-      ${name} / ${type}
-    </div>
-  `;
-
-  const list = document.getElementById('orderList');
-
-  if (list.innerHTML.includes("없습니다")) {
-    list.innerHTML = "";
-  }
-
-  list.innerHTML += orderHTML;
-
-  document.getElementById('patient').value = "";
-  document.getElementById('type').value = "";
+.notice {
+  padding: 12px;
+  font-size: 10px;
+  color: #333;
+  border-top: 1px solid #ddd;
+  line-height: 1.6;
+  text-align: center;
 }
-</script>
 
-</body>
-</html>
+.form {
+  display: none;
+  padding: 16px;
+  background: #fafafa;
+  border-top: 2px solid #486f23;
+}
+
+.form h2 {
+  margin-top: 0;
+}
+
+.form label {
+  display: block;
+  margin-top: 12
