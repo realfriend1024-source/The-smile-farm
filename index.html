@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>덴트오더</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans KR", sans-serif;
+      background: #f3f3f3;
+      color: #111;
+    }
+
+    .app {
+      max-width: 430px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: #fff;
+    }
+
+    .top-title {
+      padding: 14px 10px 6px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .top-title small {
+      font-size: 10px;
+      font-weight: 400;
+      color: #555;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      background: #e8f5ce;
+      border-bottom: 1px solid #cfd8b5;
+    }
+
+    .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+      background: #4a8b25;
+      color: #fff;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search-box input {
+      flex: 1;
+      height: 34px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      padding: 0 10px;
+      font-size: 14px;
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: #f8f8e8;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .nav-item {
+      text-align: center;
+      padding: 8px 2px;
+      font-size: 10px;
+      border-right: 1px solid #ddd;
+    }
+
+    .nav-item span {
+      display: block;
+      font-size: 19px;
+      margin-bottom: 3px;
+    }
+
+    .banner {
+      margin: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+      display: flex;
+      background: linear-gradient(90deg, #ffe896, #fff);
+    }
+
+    .banner-img {
+      width: 115px;
+      min-height: 82px;
+      background: #f7d86f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+    }
+
+    .banner-text {
+      padding: 10px;
+      flex: 1;
+    }
+
+    .banner-text h3 {
+      margin: 0 0 5px;
+      font-size: 15px;
+    }
+
+    .banner-text p {
+      margin: 0;
+      font-size: 10px;
+      line-height: 1.4;
+      color: #333;
+    }
+
+    .quick {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 14px;
+      font-size: 13px;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px 8px;
+      padding: 20px 12px;
+    }
+
+    .category {
+      text-align: center;
+      font-size: 11px;
+      line-height: 1.35;
+      cursor: pointer;
+    }
+
+    .category-icon {
+      width: 76px;
+      height: 55px;
+      margin: 0 auto 6px;
+      border-radius: 5px;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+    }
+
+    .side-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 0 18px 15px;
+    }
+
+    .small-btn {
+      width: 56px;
+      height: 56px;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .order-main {
+      margin: 0 12px 18px;
+      padding: 18px;
+      background: #456c22;
+      color: #fff;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form {
+      display: none;
+      margin: 12px;
+      padding: 18px;
+      background: #fff;
+      border: 2px solid #456c22;
+      border-radius: 12px;
+    }
+
+    .form h2 {
+      margin: 0 0 16px;
+      font-size: 24px;
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      margin-bottom: 6px;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      background: #fff;
+    }
+
+    textarea {
+      min-height: 95px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 18px;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      background: #456c22;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .orders {
+      padding: 12px;
+    }
+
+    .orders h2 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+
+    .empty {
+      padding: 18px;
+      background: #f8f8f8;
+      border-radius: 8px;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .order-card {
+      margin-bottom: 10px;
+      padding: 14px;
+      border: 1px solid #b7d69a;
+      border-radius: 10px;
+      background: #eef8e7;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .order-card b {
+      font-size: 16px;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #456c22;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .delete-btn {
+      margin-top: 10px;
+      padding: 8px 10px;
+      border: none;
+      border-radius: 6px;
+      background: #ddd;
+      cursor: pointer;
+    }
+
+    .notice {
+      padding: 12px;
+      border-top: 1px solid #ddd;
+      text-align: center;
+      font-size: 10px;
+      color: #333;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <div class="top-title">
+      서울 그린 빵빵 치과기공소
+      <br />
+      <small>접속된 업체 명칭 · 현재위치 · 접속위치 지정 변경 가능</small>
+    </div>
+
+    <div class="search-box">
+      <div class="logo">M</div>
+      <input type="text" placeholder="검색어 입력" />
+      <div>🔍</div>
+    </div>
+
+    <div class="nav">
+      <div class="nav-item"><span>📁</span>About</div>
+      <div class="nav-item"><span>📰</span>News</div>
+      <div class="nav-item"><span>▶️</span>미소누리</div>
+      <div class="nav-item"><span>🎀</span>Recruit</div>
+      <div class="nav-item"><span>🧾</span>Order</div>
+      <div class="nav-item"><span>🧱</span>Material</div>
+      <div class="nav-item"><span>🐻</span>Store</div>
+    </div>
+
+    <div class="banner">
+      <div class="banner-img">🦷</div>
+      <div class="banner-text">
+        <h3>신규 오픈! 이달 Studio 첫 주문 할인</h3>
+        <p>브랜드 할인 광고 / 쿠폰 광고 / 카드 광고 / 회원 광고</p>
+      </div>
+    </div>
+
+    <div class="quick">
+      <div>최근주문 바로가기</div>
+      <div>구독업체 바로가기</div>
+    </div>
+
+    <div class="categories">
+      <div class="category" onclick="openOrder('담당자 지정')">
+        <div class="category-icon">👤</div>
+        Assign PIC<br />담당자 지정
+      </div>
+
+      <div class="category" onclick="openOrder('PFM')">
+        <div class="category-icon">🦷</div>
+        PFM<br />포세린 메탈
+      </div>
+
+      <div class="category" onclick="openOrder('지르코니아 크라운')">
+        <div class="category-icon">😁</div>
+        Metalless<br />지르코니아/세라믹
+      </div>
+
+      <div class="category" onclick="openOrder('덴쳐')">
+        <div class="category-icon">🦷</div>
+        Removable<br />덴쳐/수리
+      </div>
+
+      <div class="category" onclick="openOrder('교정장치')">
+        <div class="category-icon">🪥</div>
+        Orthodontics<br />교정
+      </div>
+
+      <div class="category" onclick="openOrder('골드/메탈')">
+        <div class="category-icon">🥇</div>
+        All metal<br />골드/메탈
+      </div>
+
+      <div class="category" onclick="openOrder('부가작업')">
+        <div class="category-icon">🛠️</div>
+        Additional<br />스텐트/왁스업
+      </div>
+
+      <div class="category" onclick="openOrder('빠른배송')">
+        <div class="category-icon">🚚</div>
+        Express<br />빠른배송
+      </div>
+    </div>
+
+    <div class="side-buttons">
+      <button class="small-btn" onclick="openOrder('일반 오더')">🧾<br />ORDER</button>
+      <button class="small-btn">🛒<br />OTHER</button>
+    </div>
+
+    <div class="order-main" onclick="openOrder('일반 오더')">
+      ORDER
+      <br />
+      <small>[buyer programmed]</small>
+    </div>
+
+    <div class="form" id="orderForm">
+      <h2>오더 입력</h2>
+
+      <label for="patient">환자명</label>
+      <input id="patient" type="text" placeholder="예: 김OO" />
+
+      <label for="chart">차트번호</label>
+      <input id="chart" type="text" placeholder="예: 01815" />
+
+      <label for="type">보철 종류</label>
+      <select id="type">
+        <option value="지르코니아 크라운">지르코니아 크라운</option>
+        <option value="PFM">PFM</option>
+        <option value="인레이">인레이</option>
+        <option value="임플란트 크라운">임플란트 크라운</option>
+        <option value="라미네이트">라미네이트</option>
+        <option value="덴쳐">덴쳐</option>
+        <option value="교정장치">교정장치</option>
+        <option value="골드/메탈">골드/메탈</option>
+        <option value="부가작업">부가작업</option>
+        <option value="빠른배송">빠른배송</option>
+        <option value="일반 오더">일반 오더</option>
+      </select>
+
+      <label for="tooth">치식</label>
+      <input id="tooth" type="text" placeholder="예: 16" />
+
+      <label for="shade">쉐이드</label>
+      <input id="shade" type="text" placeholder="예: A2" />
+
+      <label for="memo">요청사항</label>
+      <textarea id="memo" placeholder="컨택, 교합, 마진, 색조 요청 등"></textarea>
+
+      <button class="submit-btn" onclick="submitOrder()">오더 제출</button>
+    </div>
+
+    <div class="orders">
+      <h2>📦 진행중 오더</h2>
+      <div id="orderList" class="empty">현재 진행중인 작업이 없습니다.</div>
+    </div>
+
+    <div class="notice">
+      공지사항 / 게시판 점검 안내 / 회사 정보 / 이용약관 / 개인정보처리방침 고지 등
+      <br />
+      통신판매중개 및 책임소재 안내 고지 등
+    </div>
+
+  </div>
+
+  <script>
+    let orders = JSON.parse(localStorage.getItem("dentOrders")) || [];
+
+    function saveOrders() {
+      localStorage.setItem("dentOrders", JSON.stringify(orders));
+    }
+
+    function openOrder(type) {
+      const form = document.getElementById("orderForm");
+      const select = document.getElementById("type");
+
+      form.style.display = "block";
+
+      const exists = Array.from(select.options).some(option => option.value === type);
+      if (exists) {
+        select.value = type;
+      }
+
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function submitOrder() {
+      const patient = document.getElementById("patient").value.trim();
+      const chart = document.getElementById("chart").value.trim();
+      const type = document.getElementById("type").value;
+      const tooth = document.getElementById("tooth").value.trim();
+      const shade = document.getElementById("shade").value.trim();
+      const memo = document.getElementById("memo").value.trim();
+
+      if (!patient) {
+        alert("환자명을 입력하세요.");
+        return;
+      }
+
+      if (!chart) {
+        alert("차트번호를 입력하세요.");
+        return;
+      }
+
+      const order = {
+        id: Date.now(),
+        patient,
+        chart,
+        type,
+        tooth: tooth || "-",
+        shade: shade || "-",
+        memo: memo || "특이사항 없음",
+        status: "접수대기"
+      };
+
+      orders.unshift(order);
+      saveOrders();
+      renderOrders();
+
+      document.getElementById("patient").value = "";
+      document.getElementById("chart").value = "";
+      document.getElementById("tooth").value = "";
+      document.getElementById("shade").value = "";
+      document.getElementById("memo").value = "";
+
+      alert("오더가 접수되었습니다.");
+    }
+
+    function deleteOrder(id) {
+      orders = orders.filter(order => order.id !== id);
+      saveOrders();
+      renderOrders();
+    }
+
+    function renderOrders() {
+      const list = document.getElementById("orderList");
+
+      if (orders.length === 0) {
+        list.className = "empty";
+        list.innerHTML = "현재 진행중인 작업이 없습니다.";
+        return;
+      }
+
+      list.className = "";
+      list.innerHTML = orders.map(order => `
+        <div class="order-card">
+          <b>신규 오더 접수</b><br />
+          환자명: ${escapeHtml(order.patient)}<br />
+          차트번호: ${escapeHtml(order.chart)}<br />
+          보철: ${escapeHtml(order.type)}<br />
+          치식: ${escapeHtml(order.tooth)}<br />
+          쉐이드: ${escapeHtml(order.shade)}<br />
+          요청사항: ${escapeHtml(order.memo)}<br />
+          <span class="status">${escapeHtml(order.status)}</span><br />
+          <button class="delete-btn" onclick="deleteOrder(${order.id})">삭제</button>
+        </div>
+      `).join("");
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    renderOrders();
+  </script>
+</body>
+</html>
